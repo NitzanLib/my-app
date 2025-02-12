@@ -1,0 +1,18 @@
+replicaCount: 1
+
+image:
+  repository: <your-ecr-registry-url>/counter-service  # Replace with your ECR repository URL
+  pullPolicy: IfNotPresent
+  tag: "v1.0.0"  # Use the versioned tag you created
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: LoadBalancer
+  port: 80
+
+ingress:
+  enabled: false
+
+resources: {}
