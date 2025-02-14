@@ -1,9 +1,9 @@
 replicaCount: 1
 
 image:
-  repository: <your-ecr-registry-url>/counter-service  # Replace with your ECR repository URL
+  repository: 424579921836.dkr.ecr.eu-west-1.amazonaws.com/counter-service 
   pullPolicy: IfNotPresent
-  tag: "v1.0.0"  # Use the versioned tag you created
+  tag: "v1.0.0"  
 
 nameOverride: ""
 fullnameOverride: ""
