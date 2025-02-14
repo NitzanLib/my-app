@@ -43,14 +43,15 @@ jobs:
           kubectl config get-contexts
           kubectl cluster-info
 
-      - name: Ensure Namespace Exists
-        run: |
-          kubectl get namespace counter-service || kubectl create namespace counter-service
+      # - name: Ensure Namespace Exists
+      #   run: |
+      #     kubectl get namespace counter-service || kubectl create namespace counter-service
         
       - name: Deploy with Helm
         run: |
           helm upgrade --install counter-service helm/counter-service \
             --namespace counter-service \
+            --create-namespace \
             --set image.repository=$ECR_REGISTRY/counter-service \
             --set image.tag=$IMAGE_TAG
 
