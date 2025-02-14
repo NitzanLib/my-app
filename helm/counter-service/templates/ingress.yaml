@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "counter-service.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app: {{ include "counter-service.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}

@@ -2,7 +2,9 @@ replicaCount: 1
 
 image:
   repository: 424579921836.dkr.ecr.eu-west-1.amazonaws.com/counter-service 
+  repository: 424579921836.dkr.ecr.eu-west-1.amazonaws.com/counter-service 
   pullPolicy: IfNotPresent
+  tag: "v1.0.0"  
   tag: "v1.0.0"  
 
 nameOverride: ""

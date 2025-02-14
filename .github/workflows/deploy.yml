@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:  # Allows manual execution
 
 jobs:
@@ -23,6 +20,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-1
+          aws-region: eu-west-1
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -36,8 +34,26 @@ jobs:
           docker build -t $ECR_REGISTRY/counter-service:$IMAGE_TAG .
           docker push $ECR_REGISTRY/counter-service:$IMAGE_TAG
 
-      - name: Deploy with Helm
+      - name: Install Helm
         run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      - name: Configure Kubectl for EKS
+        run: |
+          aws eks update-kubeconfig --name my-eks-cluster --region eu-west-1
+          kubectl config get-contexts
+          kubectl cluster-info
+
+      - name: Deploy with Helm
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          helm upgrade --install counter-service helm/counter-service \
+            --namespace counter-service \
+            --create-namespace \
+            --set image.repository=$ECR_REGISTRY/counter-service \
+            --set image.tag=$IMAGE_TAG
           helm upgrade --install counter-service helm/counter-service \
             --namespace counter-service \
             --create-namespace \
