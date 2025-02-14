@@ -53,8 +53,3 @@ jobs:
             --create-namespace \
             --set image.repository=$ECR_REGISTRY/counter-service \
             --set image.tag=$IMAGE_TAG
-          helm upgrade --install counter-service helm/counter-service \
-            --namespace counter-service \
-            --create-namespace \
-            --set image.repository=$ECR_REGISTRY/counter-service \
-            --set image.tag=$IMAGE_TAG
