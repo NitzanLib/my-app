@@ -61,7 +61,7 @@ my-app/
    python counter-service.py
    ```
 
-**To install the application to your [my-infra](https://github.com/NitzanLib/my-inra) infrastructure, follow these steps:**
+**To install the application to your [my-infra](https://github.com/NitzanLib/my-infra) infrastructure, follow these steps:**
 
 1. Build and Push the Docker Image:
 
@@ -82,13 +82,19 @@ my-app/
 
 **Install the Application Using Helm**
 
-1.  ```bash
-    helm upgrade --install counter-service helm/counter-service \
-  --namespace <your-namespace> \
-  --create-namespace \
-  --set image.repository=<your-ecr-registry>/counter-service \
-  --set image.tag=v1.0.0
-  ```
+1. ```bash
+   helm upgrade --install counter-service helm/counter-service --namespace <your-namespace> --create-namespace --set image.repository=<your-ecr-registry>/counter-service --set image.tag=v1.0.0
+   ```
+  
+3. Verify the application is installed:
+    ```bash
+    aws eks update-kubeconfig --name <your-cluster-name> --region <your-aws-region>
+    ```
+    ```bash
+    kubectl get pods -n <your-namespace>
+    ```
+    You should see your new pod in running state.
+   
 
 **Deploy Using Github Actions**
 
@@ -146,4 +152,5 @@ To uninstall the counter-service application from your Kubernetes cluster, follo
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
 
 
-Let me know if you have any questions :]
+
+**Let me know if you have any questions :]**
